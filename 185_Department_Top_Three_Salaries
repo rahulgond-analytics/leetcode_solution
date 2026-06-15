@@ -1,0 +1,13 @@
+sql query....
+
+with cte as
+(select e.name as Employee , e.Salary,d.name as Department,
+DENSE_RANK() over(partition by d.id 
+order by e.salary desc) as rn
+from Employee as e
+inner join Department as d
+on e.departmentId=d.id
+)
+select c.Department,c.Employee,c.Salary
+from cte as c
+where rn<=3;
