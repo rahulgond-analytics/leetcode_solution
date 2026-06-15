@@ -1,0 +1,19 @@
+////solution////
+
+with cte as
+(SELECT manager_name,
+       COUNT(*) AS manager_repcount
+FROM
+(
+    SELECT a.id,
+           a.name,
+           b.name AS manager_name
+    FROM Employee a
+    JOIN Employee b
+    ON a.managerId = b.id
+) x
+GROUP BY manager_name
+HAVING COUNT(*) >= 5)
+select manager_name as name
+from cte; 
+
